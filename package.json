@@ -119,7 +119,8 @@
     "commander": "2.3.0",
     "js-yaml": "3.13.1",
     "lodash": "4.17.11",
-    "postman-collection": "3.4.7"
+    "postman-collection": "3.4.7",
+    "snyk": "^1.189.0"
   },
   "author": "Postman Labs <help@getpostman.com>",
   "license": "Apache-2.0",
@@ -140,6 +141,9 @@
     "test-unit": "./scripts/test-unit.sh",
     "test-lint": "./scripts/test-lint.sh",
     "test-system": "./scripts/test-system.sh",
-    "coverage": "nyc report --reporter=html --reporter=text mocha"
-  }
+    "coverage": "nyc report --reporter=html --reporter=text mocha",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "snyk": true
 }
