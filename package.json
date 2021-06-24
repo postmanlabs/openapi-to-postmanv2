@@ -124,7 +124,7 @@
     "lodash": "4.17.21",
     "oas-resolver-browser": "2.5.1",
     "path-browserify": "1.0.1",
-    "postman-collection": "3.6.11",
+    "postman-collection": "4.0.0",
     "yaml": "1.10.2"
   },
   "author": "Postman Labs <help@getpostman.com>",
