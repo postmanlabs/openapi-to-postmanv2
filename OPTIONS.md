@@ -17,3 +17,4 @@ validateMetadata|boolean|-|false|Whether to show mismatches for incorrect name a
 ignoreUnresolvedVariables|boolean|-|false|Whether to ignore mismatches resulting from unresolved variables in the Postman request|VALIDATION
 strictRequestMatching|boolean|-|false|Whether requests should be strictly matched with schema operations. Setting to true will not include any matches where the URL path segments don't match exactly.|VALIDATION
 disableOptionalParameters|boolean|-|false|Whether to set optional parameters as disabled|CONVERSION
+separateRequests|array|-|null|Whether to have separate requests for multiple response status codes|CONVERSION

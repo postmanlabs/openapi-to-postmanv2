@@ -20,7 +20,8 @@ const optionIds = [
     'ignoreUnresolvedVariables',
     'optimizeConversion',
     'strictRequestMatching',
-    'disableOptionalParameters'
+    'disableOptionalParameters',
+    'separateRequests'
   ],
   expectedOptions = {
     collapseFolders: {
@@ -146,6 +147,12 @@ const optionIds = [
       type: 'boolean',
       default: false,
       description: 'Whether to set optional parameters as disabled'
+    },
+    separateRequests: {
+      name: 'Separate requests',
+      type: 'array',
+      default: null,
+      description: 'Whether to have separate requests for multiple response status codes'
     }
   };
 
