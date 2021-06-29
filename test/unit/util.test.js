@@ -300,39 +300,23 @@ describe('SCHEMA UTILITY FUNCTION TESTS ', function () {
       expect(retVal).to.eql([]);
     });
 
-    it('should not throw error if a parameter with invalid $ref is passed', function () {
+    it('should resolve ref outside components and paths', function () {
       var operationParam = [
-          { name: 'limit', in: 'query', $ref: '#/invalid/ref/1' }
+          { name: 'limit', in: 'query', $ref: '#/valid/ref' }
         ],
-        pathParam = [
-          { $ref: '#/components/schemas/searchParam' }
-        ],
-        componentsAndPaths = {
-          components: {
-            schemas: {
-              searchParam: {
-                name: 'search',
-                in: 'query',
-                schema: {
-                  type: 'string'
-                }
+        spec = {
+          valid: {
+            ref: {
+              name: 'valid',
+              in: 'query',
+              schema: {
+                type: 'string'
               }
             }
           }
         },
-        retVal = SchemaUtils.getRequestParams(operationParam, pathParam, componentsAndPaths);
-      expect(retVal).to.deep.equal([
-        {
-          value: 'Error reading #/invalid/ref/1. Can only use references from components and paths'
-        },
-        {
-          name: 'search',
-          in: 'query',
-          schema: {
-            type: 'string'
-          }
-        }
-      ]);
+        retVal = SchemaUtils.getRequestParams(operationParam, null, spec);
+      expect(retVal).to.eql(operationParam);
     });
   });
 
