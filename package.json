@@ -146,6 +146,7 @@
     "test-unit": "./scripts/test-unit.sh",
     "test-lint": "./scripts/test-lint.sh",
     "test-system": "./scripts/test-system.sh",
+    "release": "./scripts/release.sh",
     "coverage": "nyc report --reporter=html --reporter=text mocha"
   }
 }
