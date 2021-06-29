@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "generateTests": {
+    "limitOperations": ["get-lists"],
+    "responseChecks": {
+      "StatusSuccess": {
+        "enabled": true
+      },
+      "responseTime": {
+        "enabled": true,
+        "maxMs": 300
+      },
+      "headersPresent": {
+        "enabled": true
+      },
+      "contentType": {
+        "enabled": true
+      },
+      "jsonBody": {
+        "enabled": true
+      },
+      "schemaValidation": {
+        "enabled": true
+      }
+    }
+  },
+  "extendTests": [
+    {
+      "openApiOperationId": "get-lists",
+      "overwrite": true,
+      "tests": [
+        "pm.test('200 ok', function(){pm.response.to.have.status(200);});",
+        "pm.test('check userId after create', function(){Number.isInteger(responseBody);}); "
+      ]
+    },
+    {
+      "openApiOperationId": "Lists_Get",
+      "tests": [
+        "pm.test('200 ok', function(){pm.response.to.have.status(200);});",
+        "pm.test('check userId after create', function(){Number.isInteger(responseBody);}); "
+      ],
+      "responseChecks": {
+        "responseTime": {
+          "maxMs": 1000
+        }
+      }
+    }
+  ]
+}

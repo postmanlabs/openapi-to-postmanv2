@@ -11,6 +11,7 @@ var _ = require('lodash'),
   configFile,
   definedOptions,
   testFlag,
+  testsuiteFile,
   swaggerInput,
   swaggerData;
 
@@ -51,7 +52,8 @@ program
   .option('-t, --test', 'Test the OPENAPI converter')
   .option('-p, --pretty', 'Pretty print the JSON file')
   .option('-c, --options-config <optionsConfig>', 'JSON file containing Converter options')
-  .option('-O, --options <options>', 'comma separated list of options', parseOptions);
+  .option('-O, --options <options>', 'comma separated list of options', parseOptions)
+  .option('-g, --generate <generate>', 'Generate postman tests given the JSON file with test options');
 
 program.on('--help', function() {
   /* eslint-disable */
@@ -78,6 +80,7 @@ testFlag = program.test || false;
 prettyPrintFlag = program.pretty || false;
 configFile = program.optionsConfig || false;
 definedOptions = (!(program.options instanceof Array) ? program.options : {});
+testsuiteFile = program.generate || false;
 swaggerInput;
 swaggerData;
 
@@ -124,6 +127,13 @@ function convert(swaggerData) {
   // override options provided via cli
   if (definedOptions && !_.isEmpty(definedOptions)) {
     options = definedOptions;
+  }
+
+  if (testsuiteFile) {
+    testsuiteFile = path.resolve(testsuiteFile);
+    console.log('Testsuite file: ', testsuiteFile); // eslint-disable-line no-console
+    options.testSuite = true;
+    options.testSuiteSettings = JSON.parse(fs.readFileSync(testsuiteFile, 'utf8'));
   }
 
   Converter.convert({

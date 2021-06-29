@@ -1,0 +1,107 @@
+{
+  "version": 1.0,
+  "generateTests": {
+    "limitOperations": [
+      "get-lists"
+    ],
+    "responseChecks": {
+      "StatusSuccess": {
+        "enabled": true
+      },
+      "responseTime": {
+        "enabled": true,
+        "maxMs": 300
+      },
+      "headersPresent": {
+        "enabled": true
+      },
+      "contentType": {
+        "enabled": true
+      },
+      "jsonBody": {
+        "enabled": true
+      },
+      "schemaValidation": {
+        "enabled": true
+      }
+    }
+  },
+  "extendTests": [
+    {
+      "openApiOperationId": "get-lists",
+      "tests": [
+        "pm.test('200 ok', function(){pm.response.to.have.status(200);});",
+        "pm.test('check userId after create', function(){Number.isInteger(responseBody);});"
+      ]
+    }
+  ],
+  "assignPmVariables": [
+    {
+      "openApiOperationId": "post-accounts",
+      "environmentVariables": [
+        {
+          "responseProp": "clientGuid",
+          "name": "client-ID"
+        }
+      ]
+    },
+    {
+      "openApiOperationId": "get-accounts",
+      "environmentVariables": [
+        {
+          "responseProp": "value[0].servers[0]",
+          "name": "server-address"
+        }
+      ]
+    }
+  ],
+  "overwriteRequests": [
+    {
+      "openApiOperationId": "get-accounts",
+      "overwriteRequestQueryParams": [
+        {
+          "key": "$count",
+          "value": true,
+          "overwrite": true
+        },
+        {
+          "key": "$filter",
+          "value": "{{$randomInt}}",
+          "overwrite": false
+        }
+      ],
+      "overwriteRequestHeaders": [
+        {
+          "key": "team-id",
+          "value": "{{$randomInt}}",
+          "overwrite": true
+        }
+      ]
+    },
+    {
+      "openApiOperationId": "post-accounts",
+      "overwriteRequestBody": [
+        {
+          "key": "name",
+          "value": "--{{$randomInt}}",
+          "overwrite": false
+        },
+        {
+          "key": "clientGuid",
+          "value": "{{$guid}}",
+          "overwrite": true
+        }
+      ]
+    },
+    {
+      "openApiOperationId": "delete-account",
+      "overwriteRequestPathVariables": [
+        {
+          "key": "id",
+          "value": "99",
+          "overwrite": true
+        }
+      ]
+    }
+  ]
+}
