@@ -1427,18 +1427,34 @@ describe('SCHEMA UTILITY FUNCTION TESTS ', function () {
               },
               name: {
                 type: 'string'
+              },
+              address: {
+                type: 'object',
+                properties: {
+                  city: { type: 'string' },
+                  state: { type: 'string' },
+                  country: { type: 'string' }
+                }
               }
             }
           }
         };
         it('schemaFaker = true', function (done) {
           let pmParam = SchemaUtils.convertToPmQueryParameters(param);
+          expect(pmParam).to.have.lengthOf(5);
           expect(pmParam[0].key).to.equal(param.name + '[id]');
           expect(pmParam[1].key).to.equal(param.name + '[name]');
-          expect(pmParam[0].description).to.equal(param.description);
-          expect(pmParam[1].description).to.equal(param.description);
+          expect(pmParam[2].key).to.equal(param.name + '[address][city]');
+          expect(pmParam[3].key).to.equal(param.name + '[address][state]');
+          expect(pmParam[4].key).to.equal(param.name + '[address][country]');
+
+          _.map(pmParam, (val, ind) => { expect(pmParam[ind].description).to.equal(param.description); });
+
           expect(pmParam[0].value).to.equal('<long>');
           expect(pmParam[1].value).to.equal('<string>');
+          expect(pmParam[2].value).to.equal('<string>');
+          expect(pmParam[3].value).to.equal('<string>');
+          expect(pmParam[4].value).to.equal('<string>');
           done();
         });
         it('schemaFaker = false', function (done) {
